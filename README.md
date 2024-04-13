@@ -1,8 +1,16 @@
-```
-npm install
-npm run dev
-```
+# Is open
+
+API to check if Programmerbar is open
+
+## Run locally
 
 ```
-npm run deploy
+pnpm install
+pnpm run dev
+```
+
+## Deploy the application
+
+```
+pnpm run deploy
 ```
