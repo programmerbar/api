@@ -5,8 +5,3 @@ compatibility_date = "2023-12-01"
 [[kv_namespaces]]
 binding = "STATUS_KV"
 id = "ef92306a34d24af19a14d9c0cd3fc5ab"
-
-[env.production]
-vars = {  ENVIRONMENT = "production"}
-route = { pattern = "api.programmer.bar", custom_domain = true}
-logpush = true

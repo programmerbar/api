@@ -1,4 +1,4 @@
-# Is open
+# Programmerbar API
 
 API to check if Programmerbar is open
 

@@ -4,6 +4,8 @@ import { StatusService, createStatusService } from "../services/status";
 export type Env = {
   Bindings: {
     STATUS_KV: KVNamespace;
+    SLACK_VERIFICATION_TOKEN: string;
+    SLACK_CHANNEL_ID: string;
   };
   Variables: {
     ip: string;
