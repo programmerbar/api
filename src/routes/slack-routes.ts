@@ -15,19 +15,7 @@ const isCommand = (command: string | null): command is Command =>
 export const registerSlackRoutes = (app: App) => {
   app.post("/slack-command", async (c) => {
     const formData = await c.req.formData();
-
-    if (formData.get("token") !== c.env.SLACK_VERIFICATION_TOKEN) {
-      c.status(401);
-      return;
-    }
-
-    if (formData.get("channel_id") !== c.env.SLACK_CHANNEL_ID) {
-      c.status(403);
-      return;
-    }
-
     const { statusKV } = c.get("services");
-
     const command = formData.get("command");
 
     if (!isCommand(command)) {
@@ -43,6 +31,16 @@ export const registerSlackRoutes = (app: App) => {
         response_type: "in_channel",
         text,
       });
+    }
+
+    if (formData.get("token") !== c.env.SLACK_VERIFICATION_TOKEN) {
+      c.status(401);
+      return;
+    }
+
+    if (formData.get("channel_id") !== c.env.SLACK_CHANNEL_ID) {
+      c.status(403);
+      return;
     }
 
     if ([COMMAND.OPEN, COMMAND.CLOSED].includes(command)) {
