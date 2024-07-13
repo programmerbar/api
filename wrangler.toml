@@ -19,4 +19,4 @@ id = "ef92306a34d24af19a14d9c0cd3fc5ab"
 
 [[r2_buckets]]
 binding = "R2"
-bucket_name = "profile-pics"
+bucket_name = "profile-pictures"
