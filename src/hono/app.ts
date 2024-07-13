@@ -1,8 +1,9 @@
 import { Hono } from "hono";
 import { StatusService, createStatusService } from "../services/status";
 
-export type Env = {
+export type AppEnv = {
   Bindings: {
+    R2: R2Bucket;
     STATUS_KV: KVNamespace;
     SLACK_VERIFICATION_TOKEN: string;
     SLACK_CHANNEL_ID: string;
@@ -18,7 +19,7 @@ export type Env = {
 export type App = ReturnType<typeof createApp>;
 
 export const createApp = () => {
-  const app = new Hono<Env>();
+  const app = new Hono<AppEnv>();
 
   app.use("*", async (c, next) => {
     const ip = c.req.header("CF-Connecting-IP") || "127.0.0.1";

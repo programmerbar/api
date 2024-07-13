@@ -17,9 +17,11 @@ jobs:
       - name: 📦 Setup PNPM
         uses: pnpm/action-setup@v3
 
+      - name: 🚚 Install Dependencies
+        run: pnpm install
+
       - name: ⚙️ Deploy Worker
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          packageManager: "pnpm"
+        run: pnpm run deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
