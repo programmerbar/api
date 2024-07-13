@@ -1,4 +1,6 @@
 {
+  "name": "@programmerbar/api",
+  "packageManager": "pnpm@9.5.0",
   "scripts": {
     "dev": "wrangler dev src/index.ts",
     "deploy": "wrangler deploy --minify src/index.ts"
