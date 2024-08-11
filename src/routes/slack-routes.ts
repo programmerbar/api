@@ -6,8 +6,22 @@ type Command = (typeof COMMAND)[keyof typeof COMMAND];
 const COMMAND = {
   OPEN: "/åpent",
   CLOSED: "/stengt",
+  PRIVATE: "/privat",
   STATUS: "/skjer",
 } as const;
+
+const getStatusNumber = (command: Command) => {
+  switch (command) {
+    case COMMAND.OPEN:
+      return STATUS.OPEN;
+    case COMMAND.CLOSED:
+      return STATUS.CLOSED;
+    case COMMAND.PRIVATE:
+      return STATUS.PRIVATE;
+    default:
+      return STATUS.PRIVATE;
+  }
+};
 
 const isCommand = (command: string | null): command is Command =>
   Object.values(COMMAND).includes(command as Command);
@@ -43,8 +57,8 @@ export const registerSlackRoutes = (app: App) => {
       return;
     }
 
-    if ([COMMAND.OPEN, COMMAND.CLOSED].includes(command)) {
-      const status = command === COMMAND.OPEN ? STATUS.OPEN : STATUS.CLOSED;
+    if ([COMMAND.OPEN, COMMAND.CLOSED, COMMAND.PRIVATE].includes(command)) {
+      const status = getStatusNumber(command);
       const text = getStatusMessage(status);
       await statusKV.setStatus(status);
 
