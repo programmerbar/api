@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
     steps:
       - name: 📂 Checkout Repository
         uses: actions/checkout@v4
@@ -20,8 +24,8 @@ jobs:
       - name: 🚚 Install Dependencies
         run: pnpm install
 
+      - name: 🏗️ Run migrations
+        run: pnpm run db:migrate
+
       - name: ⚙️ Deploy Worker
         run: pnpm run deploy
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

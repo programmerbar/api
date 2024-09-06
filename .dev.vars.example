@@ -1,2 +1,12 @@
-SLACK_VERIFICATION_TOKEN=
-SLACK_CHANNEL_ID=
+# -- Slack
+SLACK_VERIFICATION_TOKEN=""
+SLACK_CHANNEL_ID=""
+
+# -- Feide Auth
+FEIDE_CLIENT_ID=""
+FEIDE_CLIENT_SECRET=""
+FEIDE_REDIRECT_URI="http://localhost:8787/auth/feide/callback"
+
+# -- General
+ENV="development"
+APP_URL="http://localhost:5173"
