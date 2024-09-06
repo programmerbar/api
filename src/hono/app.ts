@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { StatusService, createStatusService } from "../services/status";
+import { cors } from "hono/cors";
 
 export type AppEnv = {
   Bindings: {
@@ -33,6 +34,18 @@ export const createApp = () => {
 
     await next();
   });
+
+  app.use(
+    "*",
+    cors({
+      origin: [
+        "https://portal.programmer.bar",
+        "https://programmer.bar",
+        "http://localhost:5173",
+      ],
+      allowMethods: ["GET", "POST", "OPTIONS"],
+    })
+  );
 
   return app;
 };
