@@ -1,5 +1,5 @@
 import { InferSelectModel, relations } from "drizzle-orm";
-import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { integer, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 
 export const users = sqliteTable(
   "user",
@@ -11,7 +11,9 @@ export const users = sqliteTable(
     feideId: text("feide_id"),
   },
   (t) => ({
-    githubIdIdx: index("github_id_idx").on(t.githubId),
+    emailIdx: uniqueIndex("email_idx").on(t.email),
+    githubIdIdx: uniqueIndex("github_id_idx").on(t.githubId),
+    feideIdIdx: uniqueIndex("feide_id_idx").on(t.feideId),
   }),
 );
 

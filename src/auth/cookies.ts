@@ -1,13 +1,11 @@
-import { CookieOptions, createCookie } from "@remix-run/node";
-import { lucia } from "./lucia";
+import { setCookie } from "hono/cookie";
+import { CookieOptions } from "hono/utils/cookie";
+import { AppContext } from "../hono/app";
 
-export const createStateCookie = (provider: string, options?: CookieOptions) =>
-  createCookie(`${provider}_oauth_state`, {
-    maxAge: 10 * 60,
+export const setSessionCookie = (c: AppContext, sessionId: string, options?: CookieOptions) =>
+  setCookie(c, c.var.auth.sessionCookieName, sessionId, {
     path: "/",
-    secure: process.env.NODE_ENV === "production",
     httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
     ...options,
   });
-
-export const sessionCookie = createCookie(lucia.sessionCookieName);

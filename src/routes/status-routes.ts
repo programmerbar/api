@@ -8,10 +8,17 @@ export const registerStatusRoutes = (app: App) => {
     const status = await statusKV.getStatus();
     const message = getStatusMessage(status);
 
-    return c.json({
-      status,
-      message,
-    });
+    return c.json(
+      {
+        status,
+        message,
+      },
+      {
+        headers: {
+          "Cache-Control": "public, max-age=60",
+        },
+      },
+    );
   });
 
   app.post("/", async (c) => {

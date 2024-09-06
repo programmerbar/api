@@ -1,6 +1,7 @@
 import { getCookie, setCookie } from "hono/cookie";
 import { nanoid } from "nanoid";
 import { generateState } from "oslo/oauth2";
+import { setSessionCookie } from "../auth/cookies";
 import { getFeideUser } from "../auth/providers/feide";
 import { getGitHubUser } from "../auth/providers/github";
 import { users } from "../db/schema";
@@ -33,7 +34,6 @@ export const registerAuthRoutes = (app: App) => {
     setCookie(c, "github_oauth_state", state, {
       path: "/",
       httpOnly: true,
-      sameSite: "strict",
       secure: c.env.ENV === "production",
       maxAge: 60 * 10,
     });
@@ -60,12 +60,7 @@ export const registerAuthRoutes = (app: App) => {
     if (existingUser) {
       const session = await c.var.auth.createSession(existingUser.id, {});
       const sessionCookie = c.var.auth.createSessionCookie(session.id);
-
-      setCookie(c, c.var.auth.sessionCookieName, sessionCookie.value, {
-        path: "/",
-        secure: c.env.ENV === "production",
-        ...sessionCookie.attributes,
-      });
+      setSessionCookie(c, session.id, { ...sessionCookie.attributes });
 
       return c.redirect(`${c.env.APP_URL}/dashboard`);
     }
@@ -81,12 +76,7 @@ export const registerAuthRoutes = (app: App) => {
 
     const session = await c.var.auth.createSession(userId, {});
     const sessionCookie = c.var.auth.createSessionCookie(session.id);
-
-    setCookie(c, c.var.auth.sessionCookieName, sessionCookie.value, {
-      path: "/",
-      secure: c.env.ENV === "production",
-      ...sessionCookie.attributes,
-    });
+    setSessionCookie(c, session.id, { ...sessionCookie.attributes });
 
     return c.redirect(`${c.env.APP_URL}/dashboard`);
   });
@@ -99,7 +89,6 @@ export const registerAuthRoutes = (app: App) => {
     setCookie(c, "feide_oauth_state", state, {
       path: "/",
       httpOnly: true,
-      sameSite: "strict",
       secure: c.env.ENV === "production",
       maxAge: 60 * 10,
     });
@@ -126,12 +115,7 @@ export const registerAuthRoutes = (app: App) => {
     if (existingUser) {
       const session = await c.var.auth.createSession(existingUser.id, {});
       const sessionCookie = c.var.auth.createSessionCookie(session.id);
-
-      setCookie(c, c.var.auth.sessionCookieName, sessionCookie.value, {
-        path: "/",
-        secure: c.env.ENV === "production",
-        ...sessionCookie.attributes,
-      });
+      setSessionCookie(c, session.id, { ...sessionCookie.attributes });
 
       return c.redirect(`${c.env.APP_URL}/dashboard`);
     }
@@ -147,12 +131,7 @@ export const registerAuthRoutes = (app: App) => {
 
     const session = await c.var.auth.createSession(userId, {});
     const sessionCookie = c.var.auth.createSessionCookie(session.id);
-
-    setCookie(c, c.var.auth.sessionCookieName, sessionCookie.value, {
-      path: "/",
-      secure: c.env.ENV === "production",
-      ...sessionCookie.attributes,
-    });
+    setSessionCookie(c, session.id, { ...sessionCookie.attributes });
 
     return c.redirect(`${c.env.APP_URL}/dashboard`);
   });

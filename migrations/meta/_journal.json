@@ -8,6 +8,13 @@
       "when": 1725649972253,
       "tag": "0000_exotic_silverclaw",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1725656565479,
+      "tag": "0001_numerous_black_queen",
+      "breakpoints": true
     }
   ]
 }
