@@ -27,4 +27,10 @@ export const registerUserRoutes = (app: App) => {
       message: "User updated",
     });
   });
+
+  app.get("/users", auth, async (c) => {
+    const users = await c.var.db.query.users.findMany();
+
+    return c.json(users);
+  });
 };

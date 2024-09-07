@@ -1,3 +1,5 @@
 .wrangler
 pnpm-lock.yaml
 migrations
+worker-configuration.d.ts
+
