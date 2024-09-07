@@ -1,3 +1,4 @@
+import { isPast } from "date-fns";
 import { getCookie, setCookie } from "hono/cookie";
 import { nanoid } from "nanoid";
 import { generateState } from "oslo/oauth2";
@@ -65,6 +66,18 @@ export const registerAuthRoutes = (app: App) => {
       return c.redirect(`${c.env.APP_URL}/dashboard`);
     }
 
+    const invitation = await c.var.db.query.invitations.findFirst({
+      where: (row, { eq }) => eq(row.email, githubUser.email),
+    });
+
+    if (!invitation) {
+      return c.redirect(`${c.env.APP_URL}?error=no_invitation`);
+    }
+
+    if (isPast(invitation.expiresAt)) {
+      return c.redirect(`${c.env.APP_URL}?error=invitation_expired`);
+    }
+
     const userId = nanoid();
 
     await c.var.db.insert(users).values({
@@ -118,6 +131,18 @@ export const registerAuthRoutes = (app: App) => {
       setSessionCookie(c, session.id, { ...sessionCookie.attributes });
 
       return c.redirect(`${c.env.APP_URL}/dashboard`);
+    }
+
+    const invitation = await c.var.db.query.invitations.findFirst({
+      where: (row, { eq }) => eq(row.email, feideUser.email),
+    });
+
+    if (!invitation) {
+      return c.redirect(`${c.env.APP_URL}?error=no_invitation`);
+    }
+
+    if (isPast(invitation.expiresAt)) {
+      return c.redirect(`${c.env.APP_URL}?error=invitation_expired`);
     }
 
     const userId = nanoid();

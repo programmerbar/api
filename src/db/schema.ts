@@ -1,6 +1,10 @@
 import { InferSelectModel, relations } from "drizzle-orm";
 import { integer, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 
+/**
+ * Users
+ */
+
 export const users = sqliteTable(
   "user",
   {
@@ -23,6 +27,10 @@ export const usersRelations = relations(users, ({ many }) => ({
 
 export type User = InferSelectModel<typeof users>;
 
+/**
+ * Sessions
+ */
+
 export const sessions = sqliteTable("session", {
   id: text("id").primaryKey(),
   userId: text("user_id")
@@ -37,3 +45,20 @@ export const sessionsRelations = relations(sessions, ({ one }) => ({
     references: [users.id],
   }),
 }));
+
+/**
+ * Invitations
+ */
+
+export const invitations = sqliteTable(
+  "invitation",
+  {
+    id: text("id").notNull().primaryKey(),
+    email: text("email").notNull(),
+    createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
+    expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),
+  },
+  (t) => ({
+    emailIdx: uniqueIndex("invitation_email_idx").on(t.email),
+  }),
+);

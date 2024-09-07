@@ -15,6 +15,13 @@
       "when": 1725656565479,
       "tag": "0001_numerous_black_queen",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1725703836657,
+      "tag": "0002_tan_timeslip",
+      "breakpoints": true
     }
   ]
 }
