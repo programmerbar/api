@@ -61,6 +61,13 @@ export const registerUserRoutes = (app: App) => {
         },
       });
 
+    await c.var.resend.emails.send({
+      to: data.email,
+      from: "ikkesvar@echo-webkom.no",
+      subject: "Invitasjon til Programmerbar-portalen",
+      text: "Du har blit invitert til å lage bruker på Programmerbar-portalen. Logg inn her: https://portal.programmer.bar",
+    });
+
     return c.json({
       message: "Invitation created",
       data: {

@@ -1,6 +1,7 @@
 import { GitHub } from "arctic";
 import { Context, Hono } from "hono";
 import { logger } from "hono/logger";
+import { Resend } from "resend";
 import { Auth, createAuth } from "../auth/lucia";
 import { Feide, createFeideProvider } from "../auth/providers/feide";
 import { createGitHubProvider } from "../auth/providers/github";
@@ -16,6 +17,7 @@ export type Variables = {
   ip: string;
   db: Database;
   auth: Auth;
+  resend: Resend;
   services: {
     statusKV: StatusService;
   };
@@ -49,6 +51,7 @@ export const createApp = () => {
     });
 
     c.set("ip", ip);
+    c.set("resend", new Resend(c.env.RESEND_API_TOKEN));
 
     await next();
   });
