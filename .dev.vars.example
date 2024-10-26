@@ -2,19 +2,5 @@
 SLACK_VERIFICATION_TOKEN=""
 SLACK_CHANNEL_ID=""
 
-# -- Feide Auth
-FEIDE_CLIENT_ID=""
-FEIDE_CLIENT_SECRET=""
-FEIDE_REDIRECT_URI="http://localhost:8787/auth/feide/callback"
-
-# -- GitHub Auth
-GITHUB_CLIENT_ID=""
-GITHUB_CLIENT_SECRET=""
-GITHUB_REDIRECT_URI="http://localhost:8787/auth/github/callback"
-
-# -- Resend
-RESEND_API_TOKEN="re_"
-
 # -- General
 ENV="development"
-APP_URL="http://localhost:5173"

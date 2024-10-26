@@ -24,8 +24,5 @@ jobs:
       - name: 🚚 Install Dependencies
         run: pnpm install
 
-      - name: 🏗️ Run migrations
-        run: pnpm run db:migrate --remote
-
       - name: ⚙️ Deploy Worker
         run: pnpm run deploy

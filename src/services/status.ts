@@ -21,15 +21,22 @@ export const getStatusMessage = (status: number) => {
   }
 };
 
-export type StatusService = ReturnType<typeof createStatusService>;
+export class StatusService {
+  #kv: KVNamespace;
+
+  constructor(kv: KVNamespace) {
+    this.#kv = kv;
+  }
+
+  async getStatus() {
+    return numberOrDefault(await this.#kv.get(STATUS_KEY));
+  }
+
+  async setStatus(status: number) {
+    await this.#kv.put(STATUS_KEY, String(status));
+  }
+}
 
 export const createStatusService = (kv: KVNamespace) => {
-  return {
-    async getStatus() {
-      return numberOrDefault(await kv.get(STATUS_KEY));
-    },
-    async setStatus(status: number) {
-      await kv.put(STATUS_KEY, String(status));
-    },
-  };
+  return new StatusService(kv);
 };
