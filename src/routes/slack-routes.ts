@@ -5,6 +5,7 @@ type Command = (typeof COMMAND)[keyof typeof COMMAND];
 
 const COMMAND = {
   OPEN: "/åpent",
+  HAPPY: "/happy",
   CLOSED: "/stengt",
   PRIVATE: "/privat",
   STATUS: "/skjer",
@@ -57,18 +58,13 @@ export const registerSlackRoutes = (app: App) => {
       return;
     }
 
-    if ([COMMAND.OPEN, COMMAND.CLOSED, COMMAND.PRIVATE].includes(command)) {
-      const status = getStatusNumber(command);
-      const text = getStatusMessage(status);
-      await statusKV.setStatus(status);
+    const status = getStatusNumber(command);
+    const text = getStatusMessage(status);
+    await statusKV.setStatus(status);
 
-      return c.json({
-        response_type: "in_channel",
-        text,
-      });
-    }
-
-    c.status(400);
-    return c.text("Ukjent kommando.");
+    return c.json({
+      response_type: "in_channel",
+      text,
+    });
   });
 };
