@@ -5,7 +5,6 @@ type Command = (typeof COMMAND)[keyof typeof COMMAND];
 
 const COMMAND = {
   OPEN: "/åpent",
-  HAPPY: "/happy",
   CLOSED: "/stengt",
   PRIVATE: "/privat",
   STATUS: "/skjer",
