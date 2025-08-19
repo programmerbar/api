@@ -1,5 +1,3 @@
-import { numberOrDefault } from "../utils/number";
-
 export const STATUS_KEY = "status";
 
 export const STATUS = {
@@ -29,14 +27,14 @@ export class StatusService {
   }
 
   async getStatus() {
-    return numberOrDefault(await this.#kv.get(STATUS_KEY));
+    const statusStr = await this.#kv.get(STATUS_KEY);
+    if (statusStr === null) {
+      return 0;
+    }
+    return Number(statusStr);
   }
 
   async setStatus(status: number) {
     await this.#kv.put(STATUS_KEY, String(status));
   }
 }
-
-export const createStatusService = (kv: KVNamespace) => {
-  return new StatusService(kv);
-};
